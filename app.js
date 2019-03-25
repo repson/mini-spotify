@@ -14,4 +14,7 @@ app.use(bodyParser.json());
 
 // Base routes
 
+app.get('/test', function(req, res){
+    res.status(200).send({message: "Welcome to mini-spotify application"});
+})
 module.exports = app;
