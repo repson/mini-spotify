@@ -58,3 +58,8 @@ Start app
     (node:35829) DeprecationWarning: current URL string parser is deprecated, and will be removed in a future version. To use the new parser, pass option { useNewUrlParser: true } to MongoClient.connect.
     Database connection is running ok...
     API REST Server listening in http://localhost:3977
+
+Postman
+-------
+
+https://dl.pstmn.io/download/latest/osx
