@@ -2,6 +2,7 @@
 
 var bcrypt = require('bcrypt-nodejs');
 var User = require('../models/user');
+var jwt = require('../services/jwt');
 
 function test(req, res){
     res.status(200).send({
@@ -51,7 +52,7 @@ function saveUser(req, res){
 function loginUser(req, res){
     var params = req.body;
 
-    var email = params.email;
+    let email = params.email;
     var password = params.password;
 
     User.findOne({email: email.toLowerCase()}, (err, user) => {
@@ -67,6 +68,9 @@ function loginUser(req, res){
                         // Returns user data
                         if(params.gethash){
                             //returns jwt token
+                            res.status(200).send({
+                                token: jwt.createToken(user)
+                            });
                         }else{
                             res.status(200).send({user});
                         }
