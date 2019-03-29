@@ -45,7 +45,7 @@ function getArtists(req, res){
                 });
             }
         }
-    })
+    });
 }
 
 function saveArtist(req, res){
@@ -83,7 +83,7 @@ function updateArtist(req, res){
                 res.status(200).send({artist: artistUpdated});
             }
         }
-    })
+    });
 }
 
 function deleteArtist(req, res){

@@ -41,11 +41,11 @@ function saveUser(req, res){
                             res.status(200).send({user: userStored});
                         }
                     }
-                })
+                });
             }else{
                 res.status(200).send({message: 'Enter all the fields'});
             }
-        })
+        });
     }else{
         res.status(500).send({message: 'Enter the password'});
     }

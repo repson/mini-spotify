@@ -13,6 +13,6 @@ mongoose.connect('mongodb://localhost:27017/mini_spotify', (err, res) => {
 
         app.listen(port, function(){
             console.log("API REST Server listening in http://localhost:" + port)
-        })
+        });
     }
 });
