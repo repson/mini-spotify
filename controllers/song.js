@@ -9,10 +9,23 @@ var Album = require('../models/album');
 var Song = require('../models/song');
 
 function getSong(res, req){
+    var songId = req.params.id;
+
+    Song.findById(songId).populate({path: 'album'}).exec((err, song) => {
+        if(err){
+            res.status(500).send({message: 'Request error'});
+        }else{
+            if(!song){
+                res.status(404).send({message: 'The song does not exist'});
+            }else{
+                res.status(200).send({song});
+            }
+        }
+    })
     res.status(200).send({message: 'Song controller'});
 }
 
-function SaveSong(res, req){
+function saveSong(res, req){
     var song = new Song();
 
     var params = req.body;
@@ -38,5 +51,6 @@ function SaveSong(res, req){
 
 module.exports = {
     getSong,
-    saveSong
+    saveSong,
+    getSong
 };
