@@ -25,10 +25,34 @@ function getAlbum(req, res){
     res.status(200).send({message: 'getAlbum action'});
 }
 
+function getAlbums(req, res){
+    var artistId = req.params.artist;
+
+    if(!artistId){
+        // Get all albums from db
+        var find = Album.find({}).sort('title');
+    }else{
+        // Get artist albums from db
+        var find = Album.find({artist: artistId}).sort('year');
+    }
+
+    find.populate({path: 'artist'}).exec((err, albums) => {
+        if(err){
+            res.status(500).send({message: 'Request error'});
+        }else{
+            if(!album){
+                res.status(404).send({message: 'There is not albums'});
+            }else{
+                res.status(200).send({message: albums});
+            }
+        }
+    });
+}
+
 function saveAlbum(req, res){
     var album = new Album();
-
     var params = req.body;
+
     album.title = params.title;
     album.description = params.description;
     album.year = params.year;
@@ -50,5 +74,6 @@ function saveAlbum(req, res){
 
 module.exports = {
     getAlbum,
-    saveAlbum
+    saveAlbum,
+    getAlbums
 };
