@@ -21,8 +21,36 @@ function getSong(res, req){
                 res.status(200).send({song});
             }
         }
-    })
+    });
     res.status(200).send({message: 'Song controller'});
+}
+
+function getSongs(req, res){
+    var albumId = req.params.album;
+
+    if(!album){
+        var find = Song.find({}).sort('number');
+    }else{
+        var find = Song.find({album: albumId}).sort('number');
+    }
+
+    find.populate({
+        path: 'album',
+        populate: {
+            path: 'artist',
+            model: 'Artist'
+        }
+    }).exec(function(err, songs){
+        if(err){
+            res.status(500).send({message: 'Request error'});
+        }else{
+            if(!song){
+                res.status(404).send({message: 'There are not songs'});
+            }else{
+                res.status(200).send({songs});
+            }
+        }
+    });
 }
 
 function saveSong(res, req){
@@ -49,8 +77,26 @@ function saveSong(res, req){
     });
 }
 
+function updateSong(req, res){
+    var songId = req.params.id;
+    var update = req.body;
+
+    Song.findByIdAndUpdate(songId, update, (err, songUpdate) => {
+        if(err){
+            res.status(500).send({message: 'Server error'});
+        }else{
+            if(!songUpdated){
+                res.status(404).send({message: 'Song has not been updated'})
+            }else{
+                res.status(200).send({song: songUpdated});
+            }
+        }
+    });
+}
+
 module.exports = {
     getSong,
+    getSongs,
     saveSong,
-    getSong
+    updateSong
 };
