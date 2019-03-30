@@ -74,3 +74,25 @@ Angular CLI
     $ cd client/
 
     $ npm start
+
+Bootstrap
+---------
+
+    $ wget https://github.com/twbs/bootstrap/releases/download/v4.3.1/bootstrap-4.3.1-dist.zip
+
+Decompress zip file and copy folders inside to path mini-spotify/client/src/assets/bootstrap
+
+JQuery
+------
+
+    https://code.jquery.com
+
+    Go jquery 1.x minified:
+
+    <script
+        src="https://code.jquery.com/jquery-1.12.4.min.js"
+        integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+        crossorigin="anonymous">
+    </script>
+
+Download file to mini-spotify/client/src/assets/js/jquery.min.js
