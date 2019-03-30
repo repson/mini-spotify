@@ -63,3 +63,12 @@ Postman
 -------
 
 https://dl.pstmn.io/download/latest/osx
+
+Angular CLI
+-----------
+
+    $ npm install -g angular-cli
+
+    $ ng new mini-spotify
+
+    $ ng serve
