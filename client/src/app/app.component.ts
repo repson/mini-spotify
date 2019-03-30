@@ -35,7 +35,7 @@ export class AppComponent implements OnInit{
         let identity = response.user;
         this.identity = identity;
 
-        if(this.identity._id){
+        if(!this.identity._id){
           alert("The user is not logged correctly");
         }else{
           // Create element in local storage in order to have a user session
