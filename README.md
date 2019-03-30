@@ -69,6 +69,8 @@ Angular CLI
 
     $ npm install -g angular-cli
 
-    $ ng new mini-spotify
+    $ ng new client
 
-    $ ng serve
+    $ cd client/
+
+    $ npm start
