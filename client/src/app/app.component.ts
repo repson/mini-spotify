@@ -12,6 +12,7 @@ import { collectAndResolveStyles } from '@angular/core/src/animation/animation_s
 export class AppComponent implements OnInit{
   public title = 'Musify';
   public user: User;
+  public user_register: User;
   public identity;
   public token;
   public errorMessage;
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit{
     private _userService:UserService
   ){
     this.user = new User('', '', '', '', '', 'ROLE_USER', '');
+    this.user_register = new User('', '', '', '', '', 'ROLE_USER', '');
   }
 
   ngOnInit(){
@@ -92,5 +94,9 @@ export class AppComponent implements OnInit{
     localStorage.clear();
     this.identity = null;
     this.token = null;
+  }
+
+  onSubmitRegister(){
+    console.log(this.user_register);
   }
 }
