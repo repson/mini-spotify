@@ -16,6 +16,7 @@ export class AppComponent implements OnInit{
   public identity;
   public token;
   public errorMessage;
+  public alertRegister;
 
   constructor(
     private _userService:UserService
@@ -98,5 +99,29 @@ export class AppComponent implements OnInit{
 
   onSubmitRegister(){
     console.log(this.user_register);
+
+    this._userService.register(this.user_register).subscribe(
+      response => {
+        let user = response.user;
+        this.user_register = user;
+
+        if(!user._id){
+          this.alertRegister = 'Error in the registration process';
+        }else{
+          this.alertRegister = 'The registration was successful, log in with ' + this.user_register.email;
+          this.user_register = new User('', '', '', '', '', 'ROLE_USER', '');
+        }
+      },
+      error => {
+        var errorMessage = <any>error;
+
+        if(errorMessage != null){
+          var body = JSON.parse(error._body);
+          this.alertRegister = body.message;
+
+          console.log(error);
+        }
+      }
+    );
   }
 }
