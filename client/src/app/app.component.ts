@@ -59,8 +59,7 @@ export class AppComponent implements OnInit{
               }else{
                 // Create element in local storage in order to saved the token
                 localStorage.setItem('token', token);
-                console.log(token);
-                console.log(identity);
+                this.user = new User('', '', '', '', '', 'ROLE_USER', '');
               }
             },
             error => {

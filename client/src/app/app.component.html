@@ -78,7 +78,7 @@
 
         <p>
             <label>Password</label>
-            <input type="password" #password="ngModel" name="password" [(ngModel)]="user.password" class="form-control" required />
+            <input type="password" #password="ngModel" name="password" [(ngModel)]="user_register.password" class="form-control" required />
             <span *ngIf="!password.valid && password.touched">
                 Password is mandatory
             </span>
