@@ -4,7 +4,15 @@ Mini-Spotify
 Install Node
 ------------
 
+MacOS
+
 https://nodejs.org/dist/v10.15.3/node-v10.15.3.pkg
+
+Debian
+
+    $ sudo apt-get install curl software-properties-common
+    $ curl -sL https://deb.nodesource.com/setup_11.x | sudo bash -
+    $ sudo apt-get install nodejs
 
 Install dependencies
 --------------------
