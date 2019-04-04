@@ -18,13 +18,13 @@
   </nav>
 
   <nav id="user_logged">
-      <span>
+      <span id="identity_name">
           {{identity.name}}
         </span>
         <span class="btn btn-warning" (click)="logout()">
           Logout
         </span>
-        <a href="#">
+        <a [routerLink]="['/my-data']" >
           <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
           My data
         </a>
@@ -70,7 +70,7 @@
     <h1>Log up</h1>
     <div *ngIf="alertRegister">
         <div class="alert alert-info">
-          {{alertRegister}}
+          {{alertMessage}}
         </div>
     </div>
     <form #registerForm="ngForm" (submit)="onSubmitRegister()" class="col-md-10">
