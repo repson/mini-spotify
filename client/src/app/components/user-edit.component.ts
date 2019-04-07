@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import{ GLOBAL } from '../services/global';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user';
-import { reject } from 'q';
+//import { reject } from 'q';
 
 @Component({
     selector: 'user-edit',
@@ -17,7 +17,8 @@ export class UserEditComponent implements OnInit{
     public identity;
     public token;
     public alertMessage;
-    public url = GLOBAL.url;
+    public url: string;
+    public filesToUpload: Array<File>;
 
     constructor(
         private _userService: UserService
@@ -26,6 +27,8 @@ export class UserEditComponent implements OnInit{
         this.identity = this._userService.getIdentity();
         this.token = this._userService.getToken();
         this.user = this.identity;
+        this.url = GLOBAL.url;
+        this.token = this._userService.getToken();
     }
 
     ngOnInit(){
@@ -35,19 +38,18 @@ export class UserEditComponent implements OnInit{
     onSubmit(){
         this._userService.updateUser(this.user).subscribe(
             response => {
-                this.user = response.user;
 
                 if(!response.user){
                     this.alertMessage = 'The user is not updated';
                 }else{
-                    // this.user = response.user;
+                    this.user = response.user;
                     localStorage.setItem('identity', JSON.stringify(this.user));
                     document.getElementById("identity_name").innerHTML = this.user.name;
 
                     if(!this.filesToUpload){
                         // Redirect
                     }else{
-                        this.makeFileRequest(this.url + 'upload-image-user/' + this.user_id, [], this.filesToUpload).then(
+                        this.makeFileRequest(this.url + 'upload-image-user/' + this.user._id, [], this.filesToUpload).then(
                             (result: any) => {
                                 this.user.image = result.image;
                                 localStorage.setItem('identity', JSON.stringify(this.user));
@@ -74,8 +76,6 @@ export class UserEditComponent implements OnInit{
         );
     }
 
-    public filesToUpload: Array<File>;
-
     fileChangeEvent(fileInput: any){
         this.filesToUpload = <Array<File>>fileInput.target.files;
         console.log(this.filesToUpload);
@@ -88,7 +88,7 @@ export class UserEditComponent implements OnInit{
             var formData: any = new FormData();
             var xhr = new XMLHttpRequest();
 
-            for(var i = 0; i < FileList.length; i++){
+            for(var i = 0; i < files.length; i++){
                 formData.append('image', files[i], files[i].name);
             }
             xhr.onreadystatechange = function(){

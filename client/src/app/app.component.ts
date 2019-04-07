@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+
 import { GLOBAL } from './services/global';
 import { UserService } from './services/user.service';
 import { User } from './models/user';
-import { collectAndResolveStyles } from '@angular/core/src/animation/animation_style_util';
+// import { collectAndResolveStyles } from '@angular/core/src/animation/animation_style_util';
 
 @Component({
   selector: 'app-root',
@@ -21,14 +22,14 @@ export class AppComponent implements OnInit{
   public url: string;
 
   constructor(
-    private _userService:UserService
+    private _userService: UserService
   ){
     this.user = new User('', '', '', '', '', 'ROLE_USER', '');
     this.user_register = new User('', '', '', '', '', 'ROLE_USER', '');
     this.url = GLOBAL.url;
   }
 
-  ngOnInit(){
+  public ngOnInit(){
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
 
@@ -91,15 +92,17 @@ export class AppComponent implements OnInit{
     );
   }
 
-  logout(){
+  public logout(){
     localStorage.removeItem('identity');
     localStorage.removeItem('token');
     localStorage.clear();
     this.identity = null;
     this.token = null;
+    // this.user.gethash = null;
+    this.alertRegister = null;
   }
 
-  onSubmitRegister(){
+  public onSubmitRegister(){
     console.log(this.user_register);
 
     this._userService.register(this.user_register).subscribe(
