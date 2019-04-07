@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import{ GLOBAL } from '../services/global';
+import { GLOBAL } from '../services/global';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user';
 //import { reject } from 'q';
@@ -49,7 +49,7 @@ export class UserEditComponent implements OnInit{
                     if(!this.filesToUpload){
                         // Redirect
                     }else{
-                        this.makeFileRequest(this.url + 'upload-image-user/' + this.user._id, [], this.filesToUpload).then(
+                        this.makeFileRequest(this.url + '/upload-image-user/' + this.user._id, [], this.filesToUpload).then(
                             (result: any) => {
                                 this.user.image = result.image;
                                 localStorage.setItem('identity', JSON.stringify(this.user));
@@ -77,7 +77,7 @@ export class UserEditComponent implements OnInit{
     }
 
     fileChangeEvent(fileInput: any){
-        this.filesToUpload = <Array<File>>fileInput.target.files;
+        this.filesToUpload = <Array<File>> fileInput.target.files;
         console.log(this.filesToUpload);
     }
 
@@ -91,6 +91,7 @@ export class UserEditComponent implements OnInit{
             for(var i = 0; i < files.length; i++){
                 formData.append('image', files[i], files[i].name);
             }
+
             xhr.onreadystatechange = function(){
                 if(xhr.readyState == 4){
                     if(xhr.status == 200){
