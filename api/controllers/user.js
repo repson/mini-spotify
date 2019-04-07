@@ -100,7 +100,7 @@ function updateUser(req, res){
             if(!userUpdated){
                 res.status(404).send({message: 'Cannot update the user'});
             }else{
-                res.status(200).send({userUpdated});
+                res.status(200).send({user: userUpdated});
                 //res.status(200).send({message: "User updated"});
             }
         }
@@ -113,18 +113,21 @@ function uploadImage(req, res){
 
     if(req.files){
         var file_path = req.files.image.path;
-        var file_split = file_path.split('\\');
+        console.log(file_path);
+        var file_split = file_path.split('/');
+        console.log(file_split);
         var file_name = file_split[2];
 
         var ext_split = file_name.split('\.');
         var file_ext = ext_split[1];
 
         if(file_ext == 'png' || file_ext == 'jpg' || file_ext == 'gif'){
-            User.findByIdAndUpdate(userId, {image: file_name}, (err, userUpdate) => {
+            User.findByIdAndUpdate(userId, {image: file_name}, (err, userUpdated) => {
                 if(!userUpdated){
                     res.status(404).send({message: 'Cannot update the user'});
                 }else{
-                    res.status(200).send({image: file_name, message: "User updated"});
+                    res.status(200).send({image: file_name, user: userUpdated});
+                    //res.status(200).send({image: file_name, message: "User updated"});
                 }
             });
         }else{
@@ -140,7 +143,7 @@ function uploadImage(req, res){
 
 function getImageFile(req, res){
     var imageFile = req.params.imageFile;
-    var path_file = './uploads/users/'+imageFile
+    var path_file = './uploads/users/' + imageFile;
 
     fs.exists(path_file, function(exists){
         if(exists){

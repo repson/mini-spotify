@@ -83,7 +83,7 @@ Angular CLI
 Bootstrap
 ---------
 
-    $ wget https://github.com/twbs/bootstrap/releases/download/v4.3.1/bootstrap-4.3.1-dist.zip
+    $ wget https://github.com/twbs/bootstrap/releases/download/v3.3.6/bootstrap-3.3.6-dist.zip
 
 Decompress zip file and copy folders inside to path mini-spotify/client/src/assets/bootstrap
 
