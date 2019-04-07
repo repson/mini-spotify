@@ -38,7 +38,7 @@
 
         <p>
             <label>Upload the image:</label>
-            <input type="file" placeholder="Upload image..."/>
+            <input type="file" placeholder="Upload image..." (change)="fileChangeEvent($event)"/>
         </p>
 
         <input type="submit" value="Update data" class="btn btn-primary" />
