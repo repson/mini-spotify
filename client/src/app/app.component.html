@@ -81,7 +81,7 @@
         {{alertMessage}}
       </div>
     </div>
-    <form #registerForm="ngForm" (submit)="onSubmitRegister()" class="col-md-10">
+    <form #registerForm="ngForm" (mgSubmit)="onSubmitRegister()" class="col-md-10">
       <p>
         <label>Name</label>
         <input type="text" #name="ngModel" name="name" [(ngModel)]="user_register.name" class="form-control" required />
