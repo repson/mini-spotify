@@ -28,7 +28,6 @@ export class UserEditComponent implements OnInit{
         this.token = this._userService.getToken();
         this.user = this.identity;
         this.url = GLOBAL.url;
-        this.token = this._userService.getToken();
     }
 
     ngOnInit(){
@@ -85,7 +84,7 @@ export class UserEditComponent implements OnInit{
         var token = this.token;
 
         return new Promise(function(resolve, reject){
-            var formData: any = new FormData();
+            var formData:any = new FormData();
             var xhr = new XMLHttpRequest();
 
             for(var i = 0; i < files.length; i++){

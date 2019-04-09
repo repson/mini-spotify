@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { GLOBAL } from './services/global';
 import { UserService } from './services/user.service';
 import { User } from './models/user';
-// import { collectAndResolveStyles } from '@angular/core/src/animation/animation_style_util';
+
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,9 @@ export class AppComponent implements OnInit{
   public url: string;
 
   constructor(
-    private _userService: UserService
+    private _userService: UserService,
+    private _router: Router,
+    private _route: ActivatedRoute
   ){
     this.user = new User('', '', '', '', '', 'ROLE_USER', '');
     this.user_register = new User('', '', '', '', '', 'ROLE_USER', '');
@@ -99,6 +102,7 @@ export class AppComponent implements OnInit{
     this.identity = null;
     this.token = null;
     // this.user.gethash = null;
+    this._router.navigate(['/']);
     this.alertRegister = null;
   }
 

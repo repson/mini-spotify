@@ -47,7 +47,7 @@ function saveUser(req, res){
             }
         });
     }else{
-        res.status(500).send({message: 'Enter the password'});
+        res.status(200).send({message: 'Enter the password'});
     }
 }
 
@@ -101,7 +101,6 @@ function updateUser(req, res){
                 res.status(404).send({message: 'Cannot update the user'});
             }else{
                 res.status(200).send({user: userUpdated});
-                //res.status(200).send({message: "User updated"});
             }
         }
     });
@@ -127,17 +126,16 @@ function uploadImage(req, res){
                     res.status(404).send({message: 'Cannot update the user'});
                 }else{
                     res.status(200).send({image: file_name, user: userUpdated});
-                    //res.status(200).send({image: file_name, message: "User updated"});
                 }
             });
         }else{
-            res.status(404).send({message: 'Incorrect file extension'});
+            res.status(200).send({message: 'Incorrect file extension'});
         }
 
         console.log(file_split);
         res.status(200).send({message: 'Image uploaded'});
     }else{
-        res.status(404).send({message: 'Image missed'});
+        res.status(200).send({message: 'Image missed'});
     }
 }
 

@@ -10,7 +10,7 @@
   </nav>
 
   <nav id="user_logged">
-    <div class="user-image"><img id="image-logged" src="{{url + '/get-image-user/' + identity.image}}"/></div>
+    <div class="user-image"><img id="image-logged" src="{{url + 'get-image-user/' + identity.image}}"/></div>
     <span id="identity_name">{{identity.name}}</span>
     <a [routerLink]="['/my-data']"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>My data</a>
     <a (click)="logout()" class="btn-logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Logout</a>
