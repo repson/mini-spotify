@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { GLOBAL } from '../services/global';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user';
-//import { reject } from 'q';
 
 @Component({
     selector: 'user-edit',
@@ -12,8 +11,8 @@ import { User } from '../models/user';
 })
 
 export class UserEditComponent implements OnInit{
-    public title: string;
-    public user: User;
+    public title:string;
+    public user:User;
     public identity;
     public token;
     public alertMessage;
@@ -41,7 +40,7 @@ export class UserEditComponent implements OnInit{
                 if(!response.user){
                     this.alertMessage = 'The user is not updated';
                 }else{
-                    this.user = response.user;
+                    //this.user = response.user;
                     localStorage.setItem('identity', JSON.stringify(this.user));
                     document.getElementById("identity_name").innerHTML = this.user.name;
 
