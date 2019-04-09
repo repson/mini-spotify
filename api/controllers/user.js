@@ -131,9 +131,6 @@ function uploadImage(req, res){
         }else{
             res.status(200).send({message: 'Incorrect file extension'});
         }
-
-        console.log(file_split);
-        res.status(200).send({message: 'Image uploaded'});
     }else{
         res.status(200).send({message: 'Image missed'});
     }
