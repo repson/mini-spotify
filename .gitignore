@@ -62,4 +62,6 @@ typings/
 
 package-lock.json
 
-uploads/users/
+*.png
+*.jpg
+*.jpeg
