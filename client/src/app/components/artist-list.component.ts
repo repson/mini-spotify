@@ -3,6 +3,8 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { GLOBAL } from '../services/global';
 import { UserService } from '../services/user.service';
+// import { ArtistService } from '../services/artist.service';
+import { Artist } from '../models/artist';
 
 @Component({
     selector: 'artist-list',
@@ -11,8 +13,8 @@ import { UserService } from '../services/user.service';
 })
 
 export class ArtistListComponent implements OnInit{
-    public title:string;
-    public artists:Artist[];
+    public title: string;
+    public artists: Artist[];
     public identity;
     public token;
     public url:string;

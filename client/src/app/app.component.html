@@ -11,7 +11,7 @@
       <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
       Search
     </a>
-    <a [routerLink="['/artists', 1]"]>
+    <a [routerLink]="['/artists', 1]" [routerLinkActive]="['actived']">
       <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
       Artists
     </a>
@@ -27,7 +27,7 @@
     <span id="identity_name">
       {{identity.name}}
     </span>
-    <a [routerLink]="['/my-data']">
+    <a [routerLink]="['/my-data']" [routerLinkActive]="['actived']">
       <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
       My data
     </a>
