@@ -18,6 +18,7 @@ export class ArtistAddComponent implements OnInit{
     public identity;
     public token;
     public url:string;
+    public alertMessage;
 
     constructor(
         private _route: ActivatedRoute,
@@ -34,11 +35,31 @@ export class ArtistAddComponent implements OnInit{
 
     ngOnInit(){
         console.log('artist-add.component.ts loaded');
-        this._artistService.addArtist();
-        alert(this._artistService.addArtist());
     }
 
     onSubmit(){
         console.log(this.artist);
+        this._artistService.addArtist(this.token, this.artist).subscribe(
+            response => {
+
+                if(!response.artist){
+                    this.alertMessage = 'Server error';
+                }else{
+                    this.alertMessage = 'New artist created successfully';
+                    this.artist = response.artist;
+                    // this._router.navigate(['edit-artist', response.artist._id]);
+                }
+            },
+            error => {
+                var errorMessage = <any>error;
+
+                if(errorMessage != null){
+                    var body = JSON.parse(error._body);
+                    this.alertMessage = body.message;
+
+                    console.log(error);
+                }
+            }
+        );
     }
 }

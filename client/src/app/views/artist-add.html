@@ -1,21 +1,29 @@
-<h1>{{title}}</h1>
+<div class="col-lg-6">
+    <h1>{{title}}</h1>
 
-<form #formArtist="ngForm" (ngSubmit)="onSubmit()" class="col-lg-6">
-    <p>
-        <label>Name</label>
-        <input type="text" #name="ngModel" name="name" [(ngModel)]="artist.name" required class="form-control"/>
-        <span *ngIf="!name.valid && name.touched">
-            Name is mandatory
-        </span>
-    </p>
+    <div *ngIf="alertMessage">
+        <div class="alert alert-success" role="alert">
+            {{alertMessage}}
+        </div>
+    </div>
 
-    <p>
-        <label>Description</label>
-        <textarea #description="ngModel" name="description" [(ngModel)]="artist.description" required class="form-control"></textarea>
-        <span *ngIf="!description.valid && description.touched">
-            Description is mandatory
-        </span>
-    </p>
+    <form #formArtist="ngForm" (ngSubmit)="onSubmit()">
+        <p>
+            <label>Name</label>
+            <input type="text" #name="ngModel" name="name" [(ngModel)]="artist.name" required class="form-control"/>
+            <span *ngIf="!name.valid && name.touched">
+                Name is mandatory
+            </span>
+        </p>
 
-    <input type="submit" value="{{title}}" [disabled]="!formArtist.form.valid" class="btn btn-success"/>
-</form>
+        <p>
+            <label>Description</label>
+            <textarea #description="ngModel" name="description" [(ngModel)]="artist.description" required class="form-control"></textarea>
+            <span *ngIf="!description.valid && description.touched">
+                Description is mandatory
+            </span>
+        </p>
+
+        <input type="submit" value="{{title}}" [disabled]="!formArtist.form.valid" class="btn btn-success"/>
+    </form>
+</div>

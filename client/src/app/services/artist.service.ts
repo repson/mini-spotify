@@ -3,6 +3,7 @@ import { Http, Response, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { GLOBAL } from './global';
+import { Artist } from '../models/artist';
 
 @Injectable()
 export class ArtistService{
@@ -19,7 +20,7 @@ export class ArtistService{
             'Authorization': token
         });
 
-        return this._http.post(this.url + 'artist', params, {headers})
-            .map(res => res.json());
+        return this._http.post(this.url + 'artist', params, {headers: headers})
+                        .map(res => res.json());
     }
 }
