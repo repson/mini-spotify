@@ -1,4 +1,4 @@
-<div class="head-page" *ngIf="identity">
+<div class="head-page">
     <h1>{{title}}</h1>
 
     <a [routerLink]="['/create-artist']" *ngIf="identity && identity.role == 'ROLE_ADMIN'" class="btn btn-default">
@@ -19,13 +19,25 @@
             <img src="{{ url + 'get-image-artist/' + artist.image }}"/>
         </div>
         <div class="artist.name">
-            <a href="#">
+            <a [routerLink]="['/artist', artist._id]">
                 {{artist.name}}
             </a>
 
-            <div class="buttons" *ngIf="identify.role == 'ROLE_ADMIN'">
+            <div class="buttons" *ngIf="identity.role == 'ROLE_ADMIN'">
                 <a [routerLink]="['/edit-artist', artist._id]" class="btn btn-sm btn-warning">Edit</a>
-                <a href="#" class="btn btn-sm btn-danger">Edit</a>
+                <a (click)="onDeleteConfirm(artist._id)" class="btn btn-sm btn-danger">
+                    Delete
+                </a>
+            </div>
+
+            <div class="safe" *ngIf="confirmed == artist._id">
+                <a (click)="onDeleteArtist(artist._id)" class="btn-sm btn-danger">
+                    Delete
+                </a>
+
+                <a (click)="onCancelArtist()" class="btn-sm btn-primary">
+                    Cancel
+                </a>
             </div>
         </div>
     </li>

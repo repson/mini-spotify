@@ -58,7 +58,7 @@ export class ArtistListComponent implements OnInit{
 
             this._artistService.getArtists(this.token, page).subscribe(
                 response => {
-                    if(!response.Artists){
+                    if(!response.artists){
                         this._router.navigate(['/']);
                     }else{
                         this.artists = response.artists;
@@ -76,5 +76,35 @@ export class ArtistListComponent implements OnInit{
                 }
             );
         });
+    }
+
+    public confirmed;
+    onDeleteConfirm(id){
+        this.confirmed = id;
+    }
+
+    onCancelArtist(){
+        this.confirmed = null;
+    }
+
+    onDeleteArtist(id){
+        this._artistService.deleteArtist(this.token, id).subscribe(
+            response => {
+                if(!response.artist){
+                    alert('Server error');
+                }
+                this.getArtists();
+            },
+            error => {
+                var errorMessage = <any>error;
+
+                if(errorMessage != null){
+                    var body = JSON.parse(error._body);
+                    // this.alertMessage = body.message;
+
+                    console.log(error);
+                }
+            }
+        );
     }
 }
