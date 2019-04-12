@@ -10,6 +10,10 @@ import { ArtistListComponent } from './components/artist-list.component';
 import { ArtistAddComponent } from './components/artist-add.component';
 import { ArtistEditComponent } from './components/artist-edit.component';
 
+// import album
+
+// import song
+
 const appRoutes: Routes = [
     {path: '', component: HomeComponent},
     {path: 'artists/:page', component: ArtistListComponent},

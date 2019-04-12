@@ -73,6 +73,8 @@ export class ArtistListComponent implements OnInit{
 
                         console.log(error);
                     }
+                }
+            );
         });
     }
 }
