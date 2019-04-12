@@ -4,12 +4,13 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { GLOBAL } from '../services/global';
 import { UserService } from '../services/user.service';
 import { ArtistService } from '../services/artist.service';
+import { UploadService } from '../services/upload.service';
 import { Artist } from '../models/artist';
 
 @Component({
     selector: 'artist-edit',
     templateUrl: '../views/artist-add.html',
-    providers: [UserService, ArtistService]
+    providers: [UserService, ArtistService, UploadService]
 })
 
 export class ArtistEditComponent implements OnInit{
@@ -25,9 +26,10 @@ export class ArtistEditComponent implements OnInit{
         private _route: ActivatedRoute,
         private _router: Router,
         private _userService: UserService,
+        private _uploadService: UploadService,
         private _artistService: ArtistService
     ){
-        this.title = 'Create new artist';
+        this.title = 'Edit artist';
         this.identity = this._userService.getIdentity();
         this.token = this._userService.getToken();
         this.url = GLOBAL.url;
@@ -73,6 +75,7 @@ export class ArtistEditComponent implements OnInit{
         console.log(this.artist);
         this._route.params.forEach((params: Params) => {
             let id = params['id'];
+
             this._artistService.editArtist(this.token, id, this.artist).subscribe(
                 response => {
 
@@ -80,8 +83,20 @@ export class ArtistEditComponent implements OnInit{
                         this.alertMessage = 'Server error';
                     }else{
                         this.alertMessage = 'New artist updated successfully';
-                        // this.artist = response.artist;
-                        // this._router.navigate(['edit-artist', response.artist._id]);
+                        if(!this.filesToUpload){
+                            this._router.navigate(['/artist', response.artist._id]);
+                        }else{
+                            // Upload the image artist
+                            this._uploadService.makeFileRequest(this.url + 'upload-image-artist/' + id, [], this.filesToUpload, this.token, 'image')
+                                .then(
+                                    (result) => {
+                                        this._router.navigate(['/artist', 1]);
+                                    },
+                                    (error) => {
+                                        console.log(error);
+                                    }
+                                );
+                        }
                     }
                 },
                 error => {
@@ -96,5 +111,10 @@ export class ArtistEditComponent implements OnInit{
                 }
             );
         });
+    }
+
+    public filesToUpload: Array<File>;
+    fileChangeEvent(fileInput: any){
+        this.filesToUpload = <Array<File>>fileInput.target.files;
     }
 }
