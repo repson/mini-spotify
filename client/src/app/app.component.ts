@@ -101,9 +101,7 @@ export class AppComponent implements OnInit{
     localStorage.clear();
     this.identity = null;
     this.token = null;
-    // this.user.gethash = null;
     this._router.navigate(['/']);
-    // this.alertRegister = null;
   }
 
   public onSubmitRegister(){
