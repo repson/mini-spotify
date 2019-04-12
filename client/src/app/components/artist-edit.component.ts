@@ -38,31 +38,63 @@ export class ArtistEditComponent implements OnInit{
     ngOnInit(){
         console.log('artist-edit.component.ts loaded');
         // Call api method in order to get an artist from his id
+        this.getArtist();
+    }
+
+    getArtist(){
+        this._route.params.forEach((params: Params) => {
+            let id = params['id'];
+
+            this._artistService.getArtist(this.token, id).subscribe(
+                response => {
+                    this.artist = response.artist;
+
+                    if(!response.artist){
+                        this._router.navigate(['/']);
+                    }else{
+                        this.artist = response.artist;
+                    }
+                },
+                error => {
+                    var errorMessage = <any>error;
+
+                    if(errorMessage != null){
+                        var body = JSON.parse(error._body);
+                        // this.alertMessage = body.message;
+
+                        console.log(error);
+                    }
+                }
+            )
+        });
     }
 
     onSubmit(){
         console.log(this.artist);
-        this._artistService.addArtist(this.token, this.artist).subscribe(
-            response => {
+        this._route.params.forEach((params: Params) => {
+            let id = params['id'];
+            this._artistService.editArtist(this.token, id, this.artist).subscribe(
+                response => {
 
-                if(!response.artist){
-                    this.alertMessage = 'Server error';
-                }else{
-                    this.alertMessage = 'New artist created successfully';
-                    this.artist = response.artist;
-                    // this._router.navigate(['edit-artist', response.artist._id]);
+                    if(!response.artist){
+                        this.alertMessage = 'Server error';
+                    }else{
+                        this.alertMessage = 'New artist updated successfully';
+                        // this.artist = response.artist;
+                        // this._router.navigate(['edit-artist', response.artist._id]);
+                    }
+                },
+                error => {
+                    var errorMessage = <any>error;
+
+                    if(errorMessage != null){
+                        var body = JSON.parse(error._body);
+                        this.alertMessage = body.message;
+
+                        console.log(error);
+                    }
                 }
-            },
-            error => {
-                var errorMessage = <any>error;
-
-                if(errorMessage != null){
-                    var body = JSON.parse(error._body);
-                    this.alertMessage = body.message;
-
-                    console.log(error);
-                }
-            }
-        );
+            );
+        });
     }
 }
