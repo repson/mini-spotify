@@ -65,3 +65,5 @@ package-lock.json
 *.png
 *.jpg
 *.jpeg
+
+.gitignore.save
