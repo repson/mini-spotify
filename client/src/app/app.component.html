@@ -11,7 +11,7 @@
       <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
       Search
     </a>
-    <a href="#">
+    <a [routerLink]="['/artists', 1]" [routerLinkActive]="['actived']">
       <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
       Artists
     </a>
@@ -24,8 +24,10 @@
   <nav id="user_logged">
     <div class="user-image">
       <img id="image-logged" src="{{url + 'get-image-user/' + identity.image}}"/></div>
-    <span id="identity_name">{{identity.name}}</span>
-    <a [routerLink]="['/my-data']">
+    <span id="identity_name">
+      {{identity.name}}
+    </span>
+    <a [routerLink]="['/my-data']" [routerLinkActive]="['actived']">
       <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
       My data
     </a>
@@ -36,7 +38,7 @@
   </nav>
 </div>
 
-<div class="central col-lg-11" *ngIf="identity">
+<div [class.hidden]="!identity" class="central col-lg-11">
   <p>You are logged in the application</p>
   <router-outlet></router-outlet>
 </div>
