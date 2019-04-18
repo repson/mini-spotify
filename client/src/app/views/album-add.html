@@ -34,6 +34,17 @@
                 </span>
             </p>
 
+            <div *ngIf="is_edit">
+                <div class="album_image_for_edit" *ngIf="album.image && album.image != 'null'">
+                    <img src="{{url + 'get-image-album/' + album.image}}" />
+                </div>
+
+                <p>
+                    <label>Upload the album image</label>
+                    <input type="file" placeholder="Upload image..." (change)="fileChangeEvent($event)" />
+                </p>
+            </div>
+
             <input type="submit" value="{{title}}" [disabled]="!formAlbum.form.valid" class="btn btn-success"/>
 
     </form>
