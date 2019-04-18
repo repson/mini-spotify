@@ -10,7 +10,7 @@
             <h1>{{artist.name}}</h1>
             <p class="description">{{artist.description}}</p>
 
-            <a *ngIf="identity.role == 'ROLE_ADMIN'" href="#" class="btn btn-default ">
+            <a *ngIf="identity.role == 'ROLE_ADMIN'" href=[routerLink]="['/create-album', artist._id]" class="btn btn-default ">
                 Add album
             </a>
         </div>
