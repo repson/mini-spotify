@@ -4,102 +4,100 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { GLOBAL } from '../services/global';
 import { UserService } from '../services/user.service';
 import { UploadService } from '../services/upload.service';
-import { AlbumService } from '../services/album.service';
-import { Artist } from '../models/artist';
-import { Album } from '../models/album';
+import { SongService } from '../services/song.service';
+import { Song } from '../models/song';
 
 @Component({
-	selector: 'album-edit',
-	templateUrl: '../views/album-add.html',
-	providers: [UserService, AlbumService, UploadService]
+	selector: 'song-edit',
+	templateUrl: '../views/song-add.html',
+	providers: [UserService, SongService, UploadService]
 })
 
-export class AlbumEditComponent implements OnInit{
+export class SongEditComponent implements OnInit{
 	public titulo: string;
-	public album: Album;
+	public song: Song;
 	public identity;
 	public token;
 	public url: string;
 	public alertMessage;
 	public is_edit;
 
-
 	constructor(
 		private _route: ActivatedRoute,
 		private _router: Router,
 		private _userService: UserService,
 		private _uploadService: UploadService,
-		private _albumService: AlbumService,
+		private _songService: SongService
 	){
-		this.titulo = 'Editar album';
+		this.titulo = 'Editar canción';
 		this.identity = this._userService.getIdentity();
 		this.token = this._userService.getToken();
 		this.url = GLOBAL.url;
-		this.album = new Album('', '', 2017, '', '');
+		this.song = new Song(1,'', '', '', '');
 		this.is_edit = true;
 	}
 
 	ngOnInit(){
-		console.log('album-edit.component.ts cargado');
+		console.log('song-edit.component.ts cargado');
 
-		// Conseguir el album
-		this.getAlbum();
+		// Sacar la canción a editar
+		this.getSong();
 	}
 
-	getAlbum(){
+	getSong(){
 		this._route.params.forEach((params: Params) => {
 			let id = params['id'];
 
-			this._albumService.getAlbum(this.token, id).subscribe(
+			this._songService.getSong(this.token, id).subscribe(
 				response => {
-					
-					if(!response.album){
+					if(!response.song){
 						this._router.navigate(['/']);
 					}else{
-						this.album = response.album;
+						this.song = response.song;
+						console.log(this.song);
 					}
-
 				},
 				error => {
 					var errorMessage = <any>error;
 
 			        if(errorMessage != null){
 			          var body = JSON.parse(error._body);
+			          //this.alertMessage = body.message;
 
 			          console.log(error);
 			        }
-				}	
+				}
 			);
 		});
 	}
 
 	onSubmit(){
+
 		this._route.params.forEach((params: Params) => {
 			let id = params['id'];
 
-			this._albumService.editAlbum(this.token, id, this.album).subscribe(
+			this._songService.editSong(this.token, id, this.song).subscribe(
 				response => {
-					
-					if(!response.album){
+
+					if(!response.song){
 						this.alertMessage = 'Error en el servidor';
 					}else{
-						this.alertMessage = '¡El album se ha actualizado correctamente!';
+						this.alertMessage = '¡La canción se ha actualizamos correctamente!';
+
 						if(!this.filesToUpload){
-							// Redirigir
-							this._router.navigate(['/artista', response.album.artist]);
+							this._router.navigate(['/album', response.song.album]);
 						}else{
-							// Subir la imagen del alblum
-							this._uploadService.makeFileRequest(this.url+'upload-image-album/'+id, [], this.filesToUpload, this.token, 'image')
+							// Subir el fichero de audio
+							this._uploadService.makeFileRequest(this.url+'upload-file-song/'+id, [], this.filesToUpload, this.token, 'file')
 								.then(
 									(result) => {
-										this._router.navigate(['/artista', response.album.artist]);
+										this._router.navigate(['/album', response.song.album]);
 									},
 									(error) => {
 										console.log(error);
 									}
 								);
 						}
-						
 					}
 
 				},
@@ -112,14 +110,14 @@ export class AlbumEditComponent implements OnInit{
 
 			          console.log(error);
 			        }
-				}	
+				}
 			);
+
 		});
 	}
 
-	public filesToUpload: Array<File>;
+	public filesToUpload;
 	fileChangeEvent(fileInput: any){
 		this.filesToUpload = <Array<File>>fileInput.target.files;
 	}
-
 }

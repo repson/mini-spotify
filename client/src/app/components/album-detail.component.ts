@@ -3,20 +3,20 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { GLOBAL } from '../services/global';
 import { UserService } from '../services/user.service';
-import { ArtistService } from '../services/artist.service';
-import { Artist } from '../models/artist';
 import { AlbumService } from '../services/album.service';
 import { Album } from '../models/album';
+import { SongService } from '../services/song.service';
+import { Song } from '../models/song';
 
 @Component({
-	selector: 'artist-detail',
-	templateUrl: '../views/artist-detail.html',
-	providers: [UserService, ArtistService, AlbumService]
+	selector: 'album-detail',
+	templateUrl: '../views/album-detail.html',
+	providers: [UserService, AlbumService, SongService]
 })
 
-export class ArtistDetailComponent implements OnInit{
-	public artist: Artist;
-	public albums: Album[];
+export class AlbumDetailComponent implements OnInit{
+	public album: Album;
+	public songs: Song[];
 	public identity;
 	public token;
 	public url: string;
@@ -26,8 +26,8 @@ export class ArtistDetailComponent implements OnInit{
 		private _route: ActivatedRoute,
 		private _router: Router,
 		private _userService: UserService,
-		private _artistService: ArtistService,
-		private _albumService: AlbumService
+		private _albumService: AlbumService,
+		private _songService: SongService
 	){
 		this.identity = this._userService.getIdentity();
 		this.token = this._userService.getToken();
@@ -35,30 +35,32 @@ export class ArtistDetailComponent implements OnInit{
 	}
 
 	ngOnInit(){
-		console.log('artist-edit.component.ts cargado');
+		console.log('album-detail.component.ts cargado');
 
-		// Llamar al metodo del api para sacar un artista en base a su id getArtist
-		this.getArtist();
+		// Sacar album de la bbdd
+		this.getAlbum();
 	}
 
-	getArtist(){
+	getAlbum(){
+		
 		this._route.params.forEach((params: Params) => {
 			let id = params['id'];
 
-			this._artistService.getArtist(this.token, id).subscribe(
+			this._albumService.getAlbum(this.token, id).subscribe(
 				response => {
-					if(!response.artist){
+					if(!response.album){
 						this._router.navigate(['/']);
 					}else{
-						this.artist = response.artist;
+						this.album = response.album;
 
-						// Sacar los albums del artista
-						this._albumService.getAlbums(this.token, response.artist._id).subscribe(
+						
+						// Sacar las canciones
+						this._songService.getSongs(this.token, response.album._id).subscribe(
 						response => {
-							if(!response.albums){
-								this.alertMessage = 'Este artista no tiene albums';
+							if(!response.songs){
+								this.alertMessage = 'Este album no tiene canciones';
 							}else{
-								this.albums = response.albums;
+								this.songs = response.songs;
 							}
 						},
 						error => {
@@ -71,6 +73,7 @@ export class ArtistDetailComponent implements OnInit{
 					          console.log(error);
 					        }
 						});
+						
 
 					}
 				},
@@ -87,25 +90,26 @@ export class ArtistDetailComponent implements OnInit{
 			);
 
 		});
+      
 	}
 
 	public confirmado;
 	onDeleteConfirm(id){
 		this.confirmado = id;
-	}	
+	}
 
-	onCancelAlbum(){
+	onCancelSong(){
 		this.confirmado = null;
 	}
 
-	onDeleteAlbum(id){
-		this._albumService.deleteAlbum(this.token, id).subscribe(
+	onDeleteSong(id){
+		this._songService.deleteSong(this.token, id).subscribe(
 			response => {
-				if(!response.album){
-					alert('Error en el servidor');
+				if(!response.song){
+					alert('Error ene el servidor');
 				}
 
-				this.getArtist();
+				this.getAlbum();
 			},
 			error => {
 				var errorMessage = <any>error;
@@ -120,5 +124,20 @@ export class ArtistDetailComponent implements OnInit{
 		);
 	}
 
+	startPlayer(song){
+		let song_player = JSON.stringify(song);
+		let file_path = this.url + 'get-song-file/' + song.file;
+		let image_path = this.url + 'get-image-album/' + song.album.image;
 
+		localStorage.setItem('sound_song', song_player);
+
+		document.getElementById("mp3-source").setAttribute("src", file_path);
+		(document.getElementById("player") as any).load();
+		(document.getElementById("player") as any).play();
+
+		document.getElementById('play-song-title').innerHTML = song.name;
+		document.getElementById('play-song-artist').innerHTML = song.album.artist.name;
+		document.getElementById('play-image-album').setAttribute('src', image_path);
+
+	}
 }
