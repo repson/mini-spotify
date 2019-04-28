@@ -35,14 +35,14 @@ export class AlbumDetailComponent implements OnInit{
 	}
 
 	ngOnInit(){
-		console.log('album-detail.component.ts cargado');
+		console.log('album-detail.component.ts loaded');
 
 		// Sacar album de la bbdd
 		this.getAlbum();
 	}
 
 	getAlbum(){
-		
+
 		this._route.params.forEach((params: Params) => {
 			let id = params['id'];
 
@@ -53,12 +53,12 @@ export class AlbumDetailComponent implements OnInit{
 					}else{
 						this.album = response.album;
 
-						
+
 						// Sacar las canciones
 						this._songService.getSongs(this.token, response.album._id).subscribe(
 						response => {
 							if(!response.songs){
-								this.alertMessage = 'Este album no tiene canciones';
+								this.alertMessage = 'This album does not have songs';
 							}else{
 								this.songs = response.songs;
 							}
@@ -73,7 +73,7 @@ export class AlbumDetailComponent implements OnInit{
 					          console.log(error);
 					        }
 						});
-						
+
 
 					}
 				},
@@ -86,11 +86,9 @@ export class AlbumDetailComponent implements OnInit{
 
 			          console.log(error);
 			        }
-				}	
+				}
 			);
-
 		});
-      
 	}
 
 	public confirmado;
@@ -106,7 +104,7 @@ export class AlbumDetailComponent implements OnInit{
 		this._songService.deleteSong(this.token, id).subscribe(
 			response => {
 				if(!response.song){
-					alert('Error ene el servidor');
+					alert('Server error');
 				}
 
 				this.getAlbum();
@@ -120,7 +118,7 @@ export class AlbumDetailComponent implements OnInit{
 
 		          console.log(error);
 		        }
-			}	
+			}
 		);
 	}
 

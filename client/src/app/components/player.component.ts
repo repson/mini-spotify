@@ -16,7 +16,7 @@ import {GLOBAL} from '../services/global';
 	</div>
 
 	<div class="audio-file">
-		<p>Reproduciendo</p>
+		<p>Playing</p>
 		<span id="play-song-title">
 			{{song.name}}
 		</span>
@@ -28,7 +28,7 @@ import {GLOBAL} from '../services/global';
 		</span>
 		<audio controls id="player">
 			<source id="mp3-source" src="{{ url + 'get-song-file/' + song.file }}" type="audio/mpeg">
-			Tu navegador no es compatible con HTML5
+			Your browser is not compatible with HTML5
 		</audio>
 	</div>
 
@@ -44,7 +44,7 @@ export class PlayerComponent implements OnInit{
 	}
 
 	ngOnInit(){
-		console.log('player cargado');
+		console.log('player loaded');
 
 		var song = JSON.parse(localStorage.getItem('sound_song'));
 		if(song){

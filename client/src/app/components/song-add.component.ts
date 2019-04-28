@@ -26,7 +26,7 @@ export class SongAddComponent implements OnInit{
 		private _userService: UserService,
 		private _songService: SongService
 	){
-		this.titulo = 'Crear nueva canción';
+		this.titulo = 'Create new song';
 		this.identity = this._userService.getIdentity();
 		this.token = this._userService.getToken();
 		this.url = GLOBAL.url;
@@ -35,7 +35,7 @@ export class SongAddComponent implements OnInit{
 	}
 
 	ngOnInit(){
-		console.log('song-add.component.ts cargado');
+		console.log('song-add.component.ts loaded');
 	}
 
 	onSubmit(){
@@ -47,12 +47,12 @@ export class SongAddComponent implements OnInit{
 				response => {
 
 					if(!response.song){
-						this.alertMessage = 'Error en el servidor';
+						this.alertMessage = 'Server error';
 					}else{
-						this.alertMessage = '¡La canción se ha creado correctamente!';
+						this.alertMessage = 'The song is create successfully';
 						this.song = response.song;
 
-						this._router.navigate(['/editar-tema', response.song._id]);
+						this._router.navigate(['/edit-theme', response.song._id]);
 					}
 				},
 				error => {

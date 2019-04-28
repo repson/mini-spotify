@@ -80,9 +80,9 @@ export class SongEditComponent implements OnInit{
 				response => {
 
 					if(!response.song){
-						this.alertMessage = 'Error en el servidor';
+						this.alertMessage = 'Server error';
 					}else{
-						this.alertMessage = '¡La canción se ha actualizamos correctamente!';
+						this.alertMessage = 'Song updated successfully';
 
 						if(!this.filesToUpload){
 							this._router.navigate(['/album', response.song.album]);

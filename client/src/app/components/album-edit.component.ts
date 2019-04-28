@@ -15,7 +15,7 @@ import { Album } from '../models/album';
 })
 
 export class AlbumEditComponent implements OnInit{
-	public titulo: string;
+	public title: string;
 	public album: Album;
 	public identity;
 	public token;
@@ -31,7 +31,7 @@ export class AlbumEditComponent implements OnInit{
 		private _uploadService: UploadService,
 		private _albumService: AlbumService,
 	){
-		this.titulo = 'Editar album';
+		this.title = 'Editar album';
 		this.identity = this._userService.getIdentity();
 		this.token = this._userService.getToken();
 		this.url = GLOBAL.url;
@@ -52,7 +52,7 @@ export class AlbumEditComponent implements OnInit{
 
 			this._albumService.getAlbum(this.token, id).subscribe(
 				response => {
-					
+
 					if(!response.album){
 						this._router.navigate(['/']);
 					}else{
@@ -68,7 +68,7 @@ export class AlbumEditComponent implements OnInit{
 
 			          console.log(error);
 			        }
-				}	
+				}
 			);
 		});
 	}
@@ -79,29 +79,27 @@ export class AlbumEditComponent implements OnInit{
 
 			this._albumService.editAlbum(this.token, id, this.album).subscribe(
 				response => {
-					
+
 					if(!response.album){
-						this.alertMessage = 'Error en el servidor';
+						this.alertMessage = 'Server error';
 					}else{
-						this.alertMessage = '¡El album se ha actualizado correctamente!';
+						this.alertMessage = 'Album updated successfully';
 						if(!this.filesToUpload){
 							// Redirigir
-							this._router.navigate(['/artista', response.album.artist]);
+							this._router.navigate(['/artist', response.album.artist]);
 						}else{
 							// Subir la imagen del alblum
 							this._uploadService.makeFileRequest(this.url+'upload-image-album/'+id, [], this.filesToUpload, this.token, 'image')
 								.then(
 									(result) => {
-										this._router.navigate(['/artista', response.album.artist]);
+										this._router.navigate(['/artist', response.album.artist]);
 									},
 									(error) => {
 										console.log(error);
 									}
 								);
 						}
-						
 					}
-
 				},
 				error => {
 					var errorMessage = <any>error;
@@ -112,7 +110,7 @@ export class AlbumEditComponent implements OnInit{
 
 			          console.log(error);
 			        }
-				}	
+				}
 			);
 		});
 	}
