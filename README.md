@@ -1,7 +1,7 @@
 Mini-Spotify
 ============
 
-Spotify-like application made with Angular and Express.
+Spotify-like application made with Angular, Node.js and Express.js.
 
 Install Node
 ------------
